@@ -40,9 +40,9 @@
     const sideDrawer = document.querySelector('my-side-drawer');
 
     sideDrawerButton.addEventListener('click', () => {
-      if (!sideDrawer.open) {
-        // sideDrawer.open = 'true';
-        sideDrawer.setAttribute('open', true);
+      if (!sideDrawer.isOpened) {
+        // sideDrawer.setAttribute('is-opened', true);
+        sideDrawer.open();
       }
     });
   </script>
