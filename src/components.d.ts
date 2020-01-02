@@ -25,7 +25,6 @@ export namespace Components {
     'middle': string;
   }
   interface MySideDrawer {
-    'open': boolean;
     'title': string;
   }
 }
@@ -66,7 +65,6 @@ declare namespace LocalJSX {
     'middle'?: string;
   }
   interface MySideDrawer {
-    'open'?: boolean;
     'title'?: string;
   }
 
