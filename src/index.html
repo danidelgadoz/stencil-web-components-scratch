@@ -5,18 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
 
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .side-nav ul {
+      list-style: none;
+    }
+    .side-nav a {
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+
   <script type="module" src="/build/stencil-web-components-scratch.esm.js"></script>
   <script nomodule src="/build/stencil-web-components-scratch.js"></script>
 
 </head>
 <body>
 
-  <my-side-drawer title="Main Menu"></my-side-drawer>
+  <my-side-drawer title="Main Menu">
+    <nav class="side-nav">
+      <ul>
+        <li><a href="">A Link</a></li>
+        <li><a href="">Another Link</a></li>
+        <li><a href="">A thrid Link</a></li>
+      </ul>
+    </nav>
+  </my-side-drawer>
 
   <script>
     const sideDrwaer = document.querySelector('my-side-drawer');
     setTimeout(() => {
-      sideDrwaer.title = 'property change directly';
+      // sideDrwaer.title = 'property change directly';
       // sideDrwaer.setAttribute('title', 'property change programatically');
     }, 3000);
   </script>
