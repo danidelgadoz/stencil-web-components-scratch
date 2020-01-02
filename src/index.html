@@ -24,7 +24,7 @@
 
 </head>
 <body>
-
+  <button>Open Side menu</button>
   <my-side-drawer title="Main Menu">
     <nav class="side-nav">
       <ul>
@@ -36,11 +36,19 @@
   </my-side-drawer>
 
   <script>
-    const sideDrwaer = document.querySelector('my-side-drawer');
-    setTimeout(() => {
-      // sideDrwaer.title = 'property change directly';
-      // sideDrwaer.setAttribute('title', 'property change programatically');
-    }, 3000);
+    const sideDrawerButton = document.querySelector('button');
+    const sideDrawer = document.querySelector('my-side-drawer');
+
+    sideDrawerButton.addEventListener('click', () => {
+      console.log('sideDrawerButton click');
+      console.log(sideDrawer.open);
+
+
+      if (!sideDrawer.open) {
+        // sideDrawer.open = 'true';
+        sideDrawer.setAttribute('open', true);
+      }
+    });
   </script>
 
 </body>
