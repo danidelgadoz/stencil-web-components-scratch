@@ -24,6 +24,7 @@ export namespace Components {
     */
     'middle': string;
   }
+  interface MySideDrawer {}
 }
 
 declare global {
@@ -34,8 +35,15 @@ declare global {
     prototype: HTMLMyComponentElement;
     new (): HTMLMyComponentElement;
   };
+
+  interface HTMLMySideDrawerElement extends Components.MySideDrawer, HTMLStencilElement {}
+  var HTMLMySideDrawerElement: {
+    prototype: HTMLMySideDrawerElement;
+    new (): HTMLMySideDrawerElement;
+  };
   interface HTMLElementTagNameMap {
     'my-component': HTMLMyComponentElement;
+    'my-side-drawer': HTMLMySideDrawerElement;
   }
 }
 
@@ -54,9 +62,11 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
+  interface MySideDrawer {}
 
   interface IntrinsicElements {
     'my-component': MyComponent;
+    'my-side-drawer': MySideDrawer;
   }
 }
 
@@ -67,6 +77,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'my-component': LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+      'my-side-drawer': LocalJSX.MySideDrawer & JSXBase.HTMLAttributes<HTMLMySideDrawerElement>;
     }
   }
 }
