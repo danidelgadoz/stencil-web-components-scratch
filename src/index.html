@@ -13,5 +13,13 @@
 
   <my-side-drawer title="Main Menu"></my-side-drawer>
 
+  <script>
+    const sideDrwaer = document.querySelector('my-side-drawer');
+    setTimeout(() => {
+      sideDrwaer.title = 'property change directly';
+      // sideDrwaer.setAttribute('title', 'property change programatically');
+    }, 3000);
+  </script>
+
 </body>
 </html>
