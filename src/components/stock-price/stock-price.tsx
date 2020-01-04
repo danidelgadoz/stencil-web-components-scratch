@@ -15,12 +15,32 @@ export class MyComponent {
   @State() error: string;
   @Prop() stockSymbol: string;
 
+  componentWillLoad() {
+    console.log('componentWillLoad');
+    console.log('this.stockSymbol', this.stockSymbol);
+    if (this.stockSymbol) {
+      this.fetchStockPrice(this.stockSymbol);
+    }
+  }
+
   componentDidLoad() {
     console.log('componentDidLoad');
     console.log('this.stockSymbol', this.stockSymbol);
     if (this.stockSymbol) {
       this.fetchStockPrice(this.stockSymbol);
     }
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
+
+  componentDidUnload() {
+    console.log('componentDidUnload');
   }
 
   onUserInput(e: Event) {
@@ -59,6 +79,7 @@ export class MyComponent {
   }
 
   render() {
+    console.log('render');
     let dataContent = <p>Plese enter a symbol!</p>;
     if (this.error) {
       dataContent = <p>{this.error}</p>;
