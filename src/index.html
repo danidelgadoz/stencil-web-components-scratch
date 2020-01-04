@@ -5,47 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
 
-  <style>
-    body {
-      font-family: sans-serif;
-    }
-
-    .side-nav ul {
-      list-style: none;
-    }
-    .side-nav a {
-      text-decoration: none;
-      color: black;
-    }
-  </style>
-
   <script type="module" src="/build/stencil-web-components-scratch.esm.js"></script>
   <script nomodule src="/build/stencil-web-components-scratch.js"></script>
 
 </head>
 <body>
-  <button>Open Side menu</button>
-  <my-side-drawer title="Main Menu">
-    <nav class="side-nav">
-      <ul>
-        <li><a href="">A Link</a></li>
-        <li><a href="">Another Link</a></li>
-        <li><a href="">A thrid Link</a></li>
-      </ul>
-    </nav>
-  </my-side-drawer>
 
-  <script>
-    const sideDrawerButton = document.querySelector('button');
-    const sideDrawer = document.querySelector('my-side-drawer');
-
-    sideDrawerButton.addEventListener('click', () => {
-      if (!sideDrawer.isOpened) {
-        // sideDrawer.setAttribute('is-opened', true);
-        sideDrawer.open();
-      }
-    });
-  </script>
+  <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
 
 </body>
 </html>
