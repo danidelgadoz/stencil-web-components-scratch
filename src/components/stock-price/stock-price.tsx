@@ -1,4 +1,4 @@
-import { Component, Element, h, State, Prop } from '@stencil/core';
+import { Component, Element, h, State, Prop, Watch } from '@stencil/core';
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -7,25 +7,32 @@ import { AV_API_KEY } from '../../global/global';
   shadow: true
 })
 export class MyComponent {
-  initialStockSymbol: string;
+  // initialStockSymbol: string;
   stockInput: HTMLInputElement;
   @Element() el: HTMLElement;
   @State() fetchedPrice: number;
   @State() stockUserInput: string;
   @State() stockInputValid = false;
   @State() error: string;
-  @Prop() stockSymbol: string;
+  @Prop({ mutable: true, reflect: true }) stockSymbol: string;
+
+  @Watch('stockSymbol')
+  stockSymbolChanged(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+      this.stockUserInput = newValue;
+      this.fetchStockPrice(newValue);
+    }
+
+  }
 
   componentWillLoad() {
     console.log('componentWillLoad');
-    console.log('this.stockSymbol', this.stockSymbol);
   }
 
   componentDidLoad() {
     console.log('componentDidLoad');
-    console.log('this.stockSymbol', this.stockSymbol);
     if (this.stockSymbol) {
-      this.initialStockSymbol = this.stockSymbol;
+      // this.initialStockSymbol = this.stockSymbol;
       this.stockUserInput = this.stockSymbol;
       this.stockInputValid = true;
       this.fetchStockPrice(this.stockSymbol);
@@ -38,10 +45,10 @@ export class MyComponent {
 
   componentDidUpdate() {
     console.log('componentDidUpdate');
-    if (this.stockSymbol !== this.initialStockSymbol) {
-      this.initialStockSymbol = this.stockSymbol;
-      this.fetchStockPrice(this.stockSymbol);
-    }
+    // if (this.stockSymbol !== this.initialStockSymbol) {
+    //   this.initialStockSymbol = this.stockSymbol;
+    //   this.fetchStockPrice(this.stockSymbol);
+    // }
   }
 
   componentDidUnload() {
@@ -59,12 +66,11 @@ export class MyComponent {
 
   onFetchStockPrice(e: Event) {
     e.preventDefault();
-    const stockSymbol = this.stockInput.value;
-    this.fetchStockPrice(stockSymbol);
+    this.stockSymbol = this.stockInput.value;
   }
 
-  fetchStockPrice(stockSymbol) {
-    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
+  fetchStockPrice(ss) {
+    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ss}&apikey=${AV_API_KEY}`)
       .then(res => {
         if ( res.status !== 200 ) {
           throw new Error('Invalid!');
