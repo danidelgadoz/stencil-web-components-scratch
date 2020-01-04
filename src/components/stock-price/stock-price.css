@@ -34,3 +34,9 @@ form button:active {
   background-color: #750175;
   border-color: #750175;
 }
+
+form button:disabled {
+  background-color: lightgray;
+  border-color: lightgray;
+  color: white;
+}
