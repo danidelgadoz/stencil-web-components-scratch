@@ -1,4 +1,4 @@
-import { Component, Element, h, State } from '@stencil/core';
+import { Component, Element, h, State, Prop } from '@stencil/core';
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -13,6 +13,15 @@ export class MyComponent {
   @State() stockUserInput: string;
   @State() stockInputValid = false;
   @State() error: string;
+  @Prop() stockSymbol: string;
+
+  componentDidLoad() {
+    console.log('componentDidLoad');
+    console.log('this.stockSymbol', this.stockSymbol);
+    if (this.stockSymbol) {
+      this.fetchStockPrice(this.stockSymbol);
+    }
+  }
 
   onUserInput(e: Event) {
     this.stockUserInput = (e.target as HTMLInputElement).value;
@@ -26,7 +35,10 @@ export class MyComponent {
   onFetchStockPrice(e: Event) {
     e.preventDefault();
     const stockSymbol = this.stockInput.value;
+    this.fetchStockPrice(stockSymbol);
+  }
 
+  fetchStockPrice(stockSymbol) {
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
       .then(res => {
         if ( res.status !== 200 ) {
