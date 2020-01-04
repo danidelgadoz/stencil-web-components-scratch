@@ -1,4 +1,4 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, Element, h, State } from '@stencil/core';
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -7,13 +7,14 @@ import { AV_API_KEY } from '../../global/global';
   shadow: true
 })
 export class MyComponent {
+  @Element() el: HTMLElement;
   @State() fetchedPrice: number;
 
   onFetchStockPrice(e: Event) {
     e.preventDefault();
-    console.log('Submited!');
+    const stockSymbol = (this.el.shadowRoot.querySelector('#stock-symbol') as HTMLInputElement).value;
 
-    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=${AV_API_KEY}`)
+    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
       .then(res => {
         return res.json()
       })
