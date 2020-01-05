@@ -72,7 +72,9 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
-  interface MyStockFinder {}
+  interface MyStockFinder {
+    'onMySymbolSelected'?: (event: CustomEvent<string>) => void;
+  }
   interface MyStockPrice {
     'stockSymbol'?: string;
   }
