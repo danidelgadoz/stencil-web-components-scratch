@@ -9,19 +9,23 @@ import { AV_API_KEY } from '../../global/global';
 export class MyStockFinder {
   stockNameInput: HTMLInputElement;
   @State() searchResults: { name: string; symbol: string}[] = [];
+  @State() loading = false;
   @Event({ bubbles: true, composed: true }) mySymbolSelected: EventEmitter<string>;
 
   onFindStocks(event: Event) {
     event.preventDefault();
     const stockName = this.stockNameInput.value;
+    this.loading = true;
 
     fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${stockName}&apikey=${AV_API_KEY}`)
     .then(res => res.json())
     .then(parsedRed => {
       this.searchResults = parsedRed['bestMatches'].map(match => ({ name: match['2. name'], symbol: match['1. symbol']}));
+      this.loading = false;
     })
     .catch(err => {
       console.log(err);
+      this.loading = false;
     })
   }
 
@@ -30,14 +34,7 @@ export class MyStockFinder {
   }
 
   render() {
-    return [
-      <form onSubmit={this.onFindStocks.bind(this)}>
-        <input
-          id="stock-symbol"
-          ref={el => this.stockNameInput = el}
-        />
-        <button type="submit">Fetch</button>
-      </form>,
+    let content = (
       <ul>
         {this.searchResults.map(item => (
           <li onClick={this.onSelectSymbol.bind(this, item.symbol)}>
@@ -45,6 +42,20 @@ export class MyStockFinder {
           </li>
         ))}
       </ul>
+    );
+    if (this.loading) {
+      content = <my-spinner />
+    }
+
+    return [
+      <form onSubmit={this.onFindStocks.bind(this)}>
+        <input
+          id="stock-symbol"
+          ref={el => this.stockNameInput = el}
+        />
+        <button type="submit" disabled={this.loading}>Fetch</button>
+      </form>,
+      <div>{content}</div>
     ];
   }
 }

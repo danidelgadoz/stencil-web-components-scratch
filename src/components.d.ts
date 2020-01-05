@@ -24,6 +24,7 @@ export namespace Components {
     */
     'middle': string;
   }
+  interface MySpinner {}
   interface MyStockFinder {}
   interface MyStockPrice {
     'stockSymbol': string;
@@ -39,6 +40,12 @@ declare global {
     new (): HTMLMyComponentElement;
   };
 
+  interface HTMLMySpinnerElement extends Components.MySpinner, HTMLStencilElement {}
+  var HTMLMySpinnerElement: {
+    prototype: HTMLMySpinnerElement;
+    new (): HTMLMySpinnerElement;
+  };
+
   interface HTMLMyStockFinderElement extends Components.MyStockFinder, HTMLStencilElement {}
   var HTMLMyStockFinderElement: {
     prototype: HTMLMyStockFinderElement;
@@ -52,6 +59,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'my-component': HTMLMyComponentElement;
+    'my-spinner': HTMLMySpinnerElement;
     'my-stock-finder': HTMLMyStockFinderElement;
     'my-stock-price': HTMLMyStockPriceElement;
   }
@@ -72,6 +80,7 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
+  interface MySpinner {}
   interface MyStockFinder {
     'onMySymbolSelected'?: (event: CustomEvent<string>) => void;
   }
@@ -81,6 +90,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'my-component': MyComponent;
+    'my-spinner': MySpinner;
     'my-stock-finder': MyStockFinder;
     'my-stock-price': MyStockPrice;
   }
@@ -93,6 +103,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'my-component': LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+      'my-spinner': LocalJSX.MySpinner & JSXBase.HTMLAttributes<HTMLMySpinnerElement>;
       'my-stock-finder': LocalJSX.MyStockFinder & JSXBase.HTMLAttributes<HTMLMyStockFinderElement>;
       'my-stock-price': LocalJSX.MyStockPrice & JSXBase.HTMLAttributes<HTMLMyStockPriceElement>;
     }
