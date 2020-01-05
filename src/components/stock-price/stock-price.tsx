@@ -14,6 +14,7 @@ export class MyComponent {
   @State() stockUserInput: string;
   @State() stockInputValid = false;
   @State() error: string;
+  @State() loading = false;
   @Prop({ mutable: true, reflect: true }) stockSymbol: string;
 
   @Watch('stockSymbol')
@@ -79,6 +80,8 @@ export class MyComponent {
   }
 
   fetchStockPrice(ss) {
+    this.loading = true;
+
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ss}&apikey=${AV_API_KEY}`)
       .then(res => {
         if ( res.status !== 200 ) {
@@ -92,8 +95,10 @@ export class MyComponent {
         }
         this.fetchedPrice = +parsedRes['Global Quote']['05. price'];
         this.error = null;
+        this.loading = false;
       })
       .catch(err => {
+        this.loading = false;
         this.error = err.message;
         this.fetchedPrice = null;
       })
@@ -114,6 +119,10 @@ export class MyComponent {
       dataContent = <p>Price: {this.fetchedPrice}</p>;
     }
 
+    if (this.loading) {
+      dataContent = <div class="lds-ring"><div></div><div></div><div></div><div></div></div>;
+    }
+
     return [
       <form onSubmit={this.onFetchStockPrice.bind(this)}>
         <input
@@ -122,7 +131,7 @@ export class MyComponent {
           value={this.stockUserInput}
           onInput={this.onUserInput.bind(this)}
         />
-        <button type="submit" disabled={!this.stockInputValid}>Fetch</button>
+        <button type="submit" disabled={!this.stockInputValid || this.loading}>Fetch</button>
       </form>,
       <div>
         { dataContent }
