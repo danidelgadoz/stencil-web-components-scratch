@@ -56,7 +56,7 @@ export class MyComponent {
     console.log('componentDidUnload');
   }
 
-  @Listen('body:mySymbolSelected')
+  @Listen('mySymbolSelected', { target: 'body' })
   onStockSymbolSelected(event: CustomEvent) {
     console.log('stock symbol selected');
     if (event.detail && event.detail !== this.stockSymbol) {
@@ -95,7 +95,12 @@ export class MyComponent {
       })
       .catch(err => {
         this.error = err.message;
+        this.fetchedPrice = null;
       })
+  }
+
+  hostData() {
+    return { class: this.error ? 'hydrated error' : 'hydrated' };
   }
 
   render() {
