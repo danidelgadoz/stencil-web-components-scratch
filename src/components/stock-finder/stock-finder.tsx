@@ -37,7 +37,9 @@ export class MyStockFinder {
         <button type="submit">Fetch</button>
       </form>,
       <ul>
-        {this.searchResults.map(item => <li>{item.name}</li>)}
+        {this.searchResults.map(item => (
+          <li><strong>{item.symbol}</strong> - {item.name}</li>
+        ))}
       </ul>
     ];
   }
